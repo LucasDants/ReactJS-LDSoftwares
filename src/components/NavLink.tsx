@@ -9,9 +9,8 @@ export function NavLink({ onClick, children }: Props) {
   return (
     <Button
       variant="ghost"
-      textColor="whiteAlpha.900"
       fontSize={["xs", "lg"]}
-      px="2"
+      fontWeight="normal"
       onClick={onClick}
       _hover={{
         color: "primary.400",

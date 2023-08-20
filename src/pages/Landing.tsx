@@ -1,54 +1,40 @@
-import { Flex } from "@chakra-ui/react";
-import { useRef } from "react";
+import { Flex, IconButton, useBreakpointValue } from "@chakra-ui/react";
+
 import { About } from "../components/About";
-import { Contacts } from "../components/Contacts";
+
 import { Header } from "../components/Header";
-import { NavLink } from "../components/NavLink";
-import { Portfolio } from "../components/Portfolio";
-import { Services } from "../components/Services";
+import { Details } from "../components/Details";
+
+import { ContactUs } from "../components/ContactUsCard";
+import { List } from "phosphor-react";
 
 export function LandingPage() {
-  const aboutRef = useRef<HTMLDivElement>(null);
-  const servicesRef = useRef<HTMLDivElement>(null);
-  const portfolioRef = useRef<HTMLDivElement>(null);
-  const contactsRef = useRef<HTMLDivElement>(null);
-
-  function scrollIntoAbout() {
-    aboutRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-  }
-  function scrollIntoServices() {
-    servicesRef.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "center",
-    });
-  }
-  function scrollIntoPortfolio() {
-    portfolioRef.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "center",
-    });
-  }
-  function scrollIntoContacts() {
-    contactsRef.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "center",
-    });
-  }
+  const isSmall = useBreakpointValue({ base: true, md: false }, { ssr: false });
 
   return (
-    <Flex flex="1" flexDir="column">
+    <Flex flex="1" flexDir="column" gap={[16, "20"]} pb={16}>
       <Header>
-        <Flex as="nav" ml="auto" gap={[2, 4]}>
-          <NavLink onClick={scrollIntoAbout}>Sobre</NavLink>
-          <NavLink onClick={scrollIntoServices}>Serviços</NavLink>
-          <NavLink onClick={scrollIntoPortfolio}>Portfolio</NavLink>
-          <NavLink onClick={scrollIntoContacts}>Contatos</NavLink>
-        </Flex>
+        {isSmall ? (
+          <Flex flex={1} justify="flex-end">
+            <IconButton
+              variant="ghost"
+              size="lg"
+              aria-label="Menu"
+              icon={<List />}
+            />
+          </Flex>
+        ) : (
+          <Flex as="nav" ml="auto" gap={[2, 4]}>
+            {/* <NavLink onClick={scrollIntoAbout}>home</NavLink>
+            <NavLink onClick={scrollIntoServices}>about</NavLink>
+            <NavLink onClick={scrollIntoPortfolio}>testimonials</NavLink>
+            <NavLink onClick={scrollIntoContacts}>contact</NavLink> */}
+          </Flex>
+        )}
       </Header>
-      <About ref={aboutRef} />
-      <Services ref={servicesRef} />
-      <Portfolio ref={portfolioRef} />
-      <Contacts ref={contactsRef} />
+      <About />
+      <Details />
+      <ContactUs />
     </Flex>
   );
 }
